@@ -1,5 +1,6 @@
 {
   "name": "fancy-sprites-scss",
-  "version": "1.0.0",
-  "main": "fancy-sprites.scss"
+  "version": "1.0.1",
+  "main": "fancy-sprites.scss",
+  "license": "MIT"
 }
