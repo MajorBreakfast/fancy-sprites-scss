@@ -7,10 +7,10 @@
 @function sprite-sprite-sheet-height($i) { @return nth($i, 7); }
 
 @function sprite-info-for($sprite-sheet, $sprite) {
-  // In Sass doesnt distinguish between the lists ((...)) and (...)
+  // Note: Sass doesnt distinguish between the lists ((...)) and (...)
 
   @if type-of(sprite-sheet-name($sprite)) == string {
-    // If a sprite appears only in one sprite sheet (list)
+    // If a sprite appears only in one sprite sheet (single list)
     @return if(sprite-sheet-name($sprite) == $sprite-sheet, $sprite, null);
   } @else {
     // If a sprite appears in multiple sprite sheets (list with lists)
