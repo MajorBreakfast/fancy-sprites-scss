@@ -15,6 +15,6 @@ Uses the '1x' and '2x' sprite sheet on low and high resolution devices respectiv
 
 Having a css class for every sprite can come in handy:
 ``` SCSS
-...
+// ...
 @include sprite-classes; // .sprite-first, .sprite-second
 ```
