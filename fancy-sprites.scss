@@ -26,7 +26,7 @@
   $info-2x: sprite-info-for("2x", $sprite);
   
   @if $info-1x {
-    background-image: url("/assets/sprites/#{sprite-sheet-name($info-1x)}.png");
+    background-image: url("#{$sprites-path}#{sprite-sheet-name($info-1x)}.png");
     background-position: (- sprite-x($info-1x)) (- sprite-y($info-1x));
     width: sprite-width($info-1x);
     height: sprite-height($info-1x);
@@ -34,7 +34,7 @@
   
   @if $info-2x {
     @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
-      background-image: url("/assets/sprites/#{sprite-sheet-name($info-2x)}.png");
+      background-image: url("#{$sprites-path}#{sprite-sheet-name($info-2x)}.png");
       background-position: (- sprite-x($info-2x)*0.5) (- sprite-y($info-2x)*0.5);
       width: sprite-width($info-2x)*0.5;
       height: sprite-height($info-2x)*0.5;
