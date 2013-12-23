@@ -1,58 +1,51 @@
-@function sprite-sheet-name($i) { @return nth($i, 1); }
-@function sprite-x($i) { @return nth($i, 2); }
-@function sprite-y($i) { @return nth($i, 3); }
-@function sprite-width($i) { @return nth($i, 4); }
-@function sprite-height($i) { @return nth($i, 5); }
-@function sprite-sprite-sheet-width($i) { @return nth($i, 6); }
-@function sprite-sprite-sheet-height($i) { @return nth($i, 7); }
-
-@function sprite-info-for($sprite-sheet, $sprite) {
-  // Note: Sass doesnt distinguish between the lists ((...)) and (...)
-
-  @if type-of(sprite-sheet-name($sprite)) == string {
-    // If a sprite appears only in one sprite sheet (single list)
-    @return if(sprite-sheet-name($sprite) == $sprite-sheet, $sprite, null);
-  } @else {
-    // If a sprite appears in multiple sprite sheets (list with lists)
-    @each $info in $sprite {
-      @if sprite-sheet-name($info) == $sprite-sheet { @return $info; }
+@function sprite-name($sprite) { @return nth($sprite, 1); }
+@function sprite-info($sprite-sheet-name, $sprite) {
+  @each $info in $sprite {
+    @if type-of($info) == list { // First item is a string (the name)
+      @if sprite-info-sprite-sheet-name($info) == $sprite-sheet-name { @return $info; }
     }
-    @return null;
   }
+  @return null;
 }
 
+@function sprite-info-sprite-sheet-name($info) { @return nth($info, 1); }
+@function sprite-info-x($info) { @return nth($info, 2); }
+@function sprite-info-y($info) { @return nth($info, 3); }
+@function sprite-info-width($info) { @return nth($info, 4); }
+@function sprite-info-height($info) { @return nth($info, 5); }
+@function sprite-info-sprite-sheet-width($info) { @return nth($info, 6); }
+@function sprite-info-sprite-sheet-height($info) { @return nth($info, 7); }
+
+
+
 @mixin sprite($sprite) {
-  $info-1x: sprite-info-for("1x", $sprite);
-  $info-2x: sprite-info-for("2x", $sprite);
+  $info-1x: sprite-info("1x", $sprite);
+  $info-2x: sprite-info("2x", $sprite);
   
   @if $info-1x {
-    background-image: url("#{$sprites-path}#{sprite-sheet-name($info-1x)}.png");
-    background-position: (- sprite-x($info-1x)) (- sprite-y($info-1x));
-    width: sprite-width($info-1x);
-    height: sprite-height($info-1x);
+    background-image: url("#{$sprites-path}#{sprite-info-sprite-sheet-name($info-1x)}.png");
+    background-position: (- sprite-info-x($info-1x)) (- sprite-info-y($info-1x));
+    width: sprite-info-width($info-1x);
+    height: sprite-info-height($info-1x);
   }
   
   @if $info-2x {
     @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
-      background-image: url("#{$sprites-path}#{sprite-sheet-name($info-2x)}.png");
-      background-position: (- sprite-x($info-2x)*0.5) (- sprite-y($info-2x)*0.5);
-      width: sprite-width($info-2x)*0.5;
-      height: sprite-height($info-2x)*0.5;
-      background-size: sprite-sprite-sheet-width($info-2x)*0.5 sprite-sprite-sheet-height($info-2x)*0.5;
+      background-image: url("#{$sprites-path}#{sprite-info-sprite-sheet-name($info-2x)}.png");
+      background-position: (- sprite-info-x($info-2x)*0.5) (- sprite-info-y($info-2x)*0.5);
+      width: sprite-info-width($info-2x)*0.5;
+      height: sprite-info-height($info-2x)*0.5;
+      background-size: sprite-info-sprite-sheet-width($info-2x)*0.5 sprite-info-sprite-sheet-height($info-2x)*0.5;
     }
   }
 }
 
-// Create sprite css classes
-@mixin sprite-class($sprite) {
-  .sprite-#{nth($sprite, 1)} { @include sprite(nth($sprite, 2)); }
-  span.sprite-#{nth($sprite, 1)} { display: inline-block; vertical-align: top; }
-}
 
+
+// Create sprite css classes
 @mixin sprite-classes {
-  @if type-of(nth($sprites, 1)) == string { // Single item -> just one list
-    @include sprite-class($sprites);
-  } @else { // List with lists
-    @each $sprite in $sprites { @include sprite-class($sprite); }
+  @each $sprite in $sprites {
+    .sprite-#{sprite-name($sprite)} { @include sprite($sprite); }
+    span.sprite-#{sprite-name($sprite)} { display: inline-block; vertical-align: top; }
   }
 }
