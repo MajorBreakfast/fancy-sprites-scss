@@ -2,7 +2,7 @@ SCSS Mixin for [grunt-fancy-sprites](https://github.com/MajorBreakfast/grunt-fan
 
 [Tutorial for Fancy Sprites on YouTube](http://youtu.be/xD8DW6IQ6r0)
 
-Installation `bower install --save fancy-sprites-scss`
+Installation: `bower install --save fancy-sprites-scss`
 
 Use the mixin like this:
 ``` SCSS
