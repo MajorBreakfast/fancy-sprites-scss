@@ -1,6 +1,8 @@
 SCSS Mixin for [grunt-fancy-sprites](https://github.com/MajorBreakfast/grunt-fancy-sprites) with support for high resolution devices.
 
-`bower install --save fancy-sprites-scss`
+[Tutorial for Fancy Sprites on YouTube](http://youtu.be/xD8DW6IQ6r0)
+
+Installation `bower install --save fancy-sprites-scss`
 
 Use the mixin like this:
 ``` SCSS
