@@ -44,9 +44,15 @@
 }
 
 // Create sprite css classes
+@mixin sprite-class($sprite) {
+  .sprite-#{nth($sprite, 1)} { @include sprite(nth($sprite, 2)); }
+  span.sprite-#{nth($sprite, 1)} { display: inline-block; vertical-align: top; }
+}
+
 @mixin sprite-classes {
-  @each $sprite in $sprites {
-    .sprite-#{nth($sprite, 1)} { @include sprite(nth($sprite, 2)); }
-    span.sprite-#{nth($sprite, 1)} { display: inline-block; vertical-align: top; }
+  @if type-of(nth($sprites, 1)) == string { // Single item -> just one list
+    @include sprite-class($sprites);
+  } @else { // List with lists
+    @each $sprite in $sprites { @include sprite-class($sprite); }
   }
 }
